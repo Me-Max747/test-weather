@@ -9,7 +9,6 @@ use Illuminate\Support\Facades\Http;
 class WeatherController extends Controller
 {
     const BASE_URI = "http://api.openweathermap.org/data/2.5/forecast";
-    const APP_ID = "1ebd67f9eb8881d703ac343d214730f6";
     const CITY_LIST = array(
         "moscow" => array(
             "query" => "Moscow",
@@ -64,7 +63,7 @@ class WeatherController extends Controller
         $response = Http::get(self::BASE_URI, array(
             "q" => self::CITY_LIST[$city]["query"],
             "lang" => "ru",
-            "APPID" => self::APP_ID,
+            "APPID" => config('open_weather_api_key'),
             "units" => "metric"
         ));
         $weather = json_decode($response);

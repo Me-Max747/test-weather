@@ -63,7 +63,7 @@ class WeatherController extends Controller
         $response = Http::get(self::BASE_URI, array(
             "q" => self::CITY_LIST[$city]["query"],
             "lang" => "ru",
-            "APPID" => config('open_weather_api_key'),
+            "appid" => config('app.open_weather_api_key'),
             "units" => "metric"
         ));
         $weather = json_decode($response);

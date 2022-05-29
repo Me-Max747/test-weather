@@ -11,18 +11,22 @@ class WeatherController extends Controller
     const BASE_URI = "http://api.openweathermap.org/data/2.5/forecast";
     const CITY_LIST = array(
         "moscow" => array(
+            "code" => "moscow",
             "query" => "Moscow",
             "name" => "Москва"
         ),
         "saint_petersburg" => array(
+            "code" => "saint_petersburg",
             "query" => "Saint Petersburg",
             "name" => "Санкт Петербург"
         ),
         "tyumen" => array(
+            "code" => "tyumen",
             "query" => "Tyumen",
             "name" => "Тюмень"
         ),
         "yekaterinburg" => array(
+            "code" => "yekaterinburg",
             "query" => "Yekaterinburg",
             "name" => "Екатеринбург"
         )
@@ -31,12 +35,15 @@ class WeatherController extends Controller
     private function prepareWeather($weather): array
     {
         $result = array(
-            "city" => $weather->city,
+            "id" => $weather->city->id,
+            "name" => $weather->city->name,
+            "coordinates" => $weather->city->coord,
             "items" => array()
         );
 
-        foreach($weather->list as $item){
+        foreach($weather->list as $key => $item){
             $result["items"][] = array(
+                "code" => "weather_{$key}",
                 "datetime" => date("d.m.Y H:i", $item->dt),
                 "temp" => round($item->main->temp)." ℃",
                 "humidity" => round($item->main->humidity)."%",
